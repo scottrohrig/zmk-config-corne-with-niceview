@@ -23,6 +23,12 @@
             key-positions = <2 3>;
             layers = <1>;
         };
+
+        combo_bt_next {
+            bindings = <&bt BT_NXT>;
+            key-positions = <0 5>;
+            layers = <1>;
+        };
     };
 
     behaviors {
