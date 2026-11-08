@@ -20,3 +20,16 @@ After a successful build and a user-directed flash, check on the actual keyboard
 - Verify both halves, normal Bluetooth reconnection and profile switching, and both nice!view displays. Avoid reset and clear-pairing combos during this check.
 
 See [ZMK hold-tap documentation](https://zmk.dev/docs/keymaps/behaviors/hold-tap) for timing details. The separate `&key_repeat` behavior is not used: this configuration holds the physical key's tap output for host repeat.
+
+## Experimental mouse layer
+
+This branch adds an experimental toggle-only mouse layer. Hold the outer right thumb (Right Alt), then press Y+P within 50 ms to enter. Release Right Alt before using the layer; otherwise Alt stays held until released. Press Y+P together again to exit. The modifier also temporarily enables a transparent helper layer, so ordinary Y/P typing without that modifier is unchanged. When the mouse layer is active, its Y+P exit combo can delay or consume those keys if pressed together.
+
+- Movement: S/E/D/F and J/I/K/L are left/up/down/right.
+- Scroll: W/U up and R/O down.
+- Both inner thumbs: left-click; both middle thumbs: right-click; both outer thumbs: middle-click. Mouse buttons are held while the key is held for dragging.
+- Movement uses ZMK v0.3 defaults: maximum speed 600, linear acceleration to maximum in 300 ms. These are tunable in `pointing.h` settings and `&mmv`.
+
+The existing default Space/Shift, Enter, home-row mods, Lower, Raise, and function-layer combo remain unchanged. Check Alt shortcuts and timing carefully: the helper uses a zero-wait macro to hold Right Alt and a transparent layer simultaneously. It has not been tested on hardware.
+
+Enabling `CONFIG_ZMK_POINTING` changes the Bluetooth HID descriptor. Test via USB first; hosts may require removing and re-pairing the keyboard before mouse input works over Bluetooth. Do not clear keyboard Bluetooth settings unless needed and explicitly chosen. Reflash the retained prior candidate to roll back; switching HID descriptors can require host re-pairing again. Verify wired and wireless movement, diagonal combinations, acceleration, both scroll directions, each thumb button, two-hand drag, Y+P toggling, ordinary Y/P typing, Right Alt shortcuts, Space/Shift, Enter, home-row mods, and W+E function-layer access. Successful compilation does not verify these physical behaviors.
