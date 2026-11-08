@@ -10,7 +10,8 @@
 #include <dt-bindings/zmk/pointing.h>
 
 #define MOUSE_HELPER 4
-#define MOUSE_LAYER 5
+#define MOUSE_LEFT 5
+#define MOUSE_RIGHT 6
 
 / {
     combos {
@@ -28,10 +29,17 @@
             layers = <1>;
         };
 
-        mouse_toggle {
-            bindings = <&tog MOUSE_LAYER>;
+        mouse_left_toggle {
+            bindings = <&tog MOUSE_LEFT>;
+            key-positions = <1 5>; // Q + T
+            layers = <MOUSE_HELPER MOUSE_LEFT>;
+            timeout-ms = <50>;
+        };
+
+        mouse_right_toggle {
+            bindings = <&tog MOUSE_RIGHT>;
             key-positions = <6 10>; // Y + P
-            layers = <MOUSE_HELPER MOUSE_LAYER>;
+            layers = <MOUSE_HELPER MOUSE_RIGHT>;
             timeout-ms = <50>;
         };
 
@@ -159,12 +167,21 @@
             >;
         };
 
-        mouse {
+        mouse_left {
             bindings = <
-&trans &trans &msc SCRL_UP &mmv MOVE_UP &msc SCRL_DOWN &trans    &trans &msc SCRL_UP &mmv MOVE_UP &msc SCRL_DOWN &trans &trans
-&trans &trans &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_RIGHT &trans    &trans &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_RIGHT &trans &trans
+&trans &trans &msc SCRL_UP &mmv MOVE_UP &msc SCRL_DOWN &trans    &trans &trans &trans &trans &trans &trans
+&trans &trans &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_RIGHT &trans    &trans &trans &trans &trans &trans &trans
 &trans &trans &trans &trans &trans &trans    &trans &trans &trans &trans &trans &trans
-                           &mkp MCLK &mkp RCLK &mkp LCLK    &mkp LCLK &mkp RCLK &mkp MCLK
+                           &mkp MCLK &mkp RCLK &mkp LCLK    &trans &trans &trans
+            >;
+        };
+
+        mouse_right {
+            bindings = <
+&trans &trans &trans &trans &trans &trans    &trans &msc SCRL_UP &mmv MOVE_UP &msc SCRL_DOWN &trans &trans
+&trans &trans &trans &trans &trans &trans    &trans &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_RIGHT &trans &trans
+&trans &trans &trans &trans &trans &trans    &trans &trans &trans &trans &trans &trans
+                           &trans &trans &trans    &mkp LCLK &mkp RCLK &mkp MCLK
             >;
         };
     };
